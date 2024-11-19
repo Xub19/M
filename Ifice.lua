@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/FIce/source')))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({ 
     Name = "Ijul Piece 2",
     SaveConfig = true, 
@@ -21,10 +21,10 @@ local FIce = Window:MakeTab({
 local Players = game:GetService("Players")
 
 local function rspl(player)
-    if player.Character then
+    if player and player.Character then
         local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
         if humanoid then
-            humanoid.Health = 0 
+            humanoid.Health = 0
         end
     end
 end
@@ -45,7 +45,7 @@ local FIceSection1 = FIce:AddSection({
 
 FIceSection1:AddSlider({
     Name = "Điều chỉnh",
-    Min = 0,
+    Min = 1, 
     Max = 100,
     Default = 33,
     Color = Color3.fromRGB(255, 255, 255),
@@ -89,13 +89,15 @@ FIceSection3:AddToggle({
                             and game:GetService("ReplicatedStorage").Events:FindFirstChild("MalevolentShrine")
 
                         if humanoid and skill and event then
-                            character.HumanoidRootPart.CFrame = CFrame.new(-2411.69824, 19.8741894, -598.203064, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-                            humanoid:EquipTool(skill)
-                            event:FireServer()
-                            task.wait(waitt)
-                            if atrs then
-                                rspl(localPlayer)
-                            end
+                            pcall(function()
+                                character.HumanoidRootPart.CFrame = CFrame.new(-2411.69824, 19.8741894, -598.203064, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+                                humanoid:EquipTool(skill)
+                                event:FireServer()
+                                task.wait(waitt)
+                                if atrs then
+                                    rspl(localPlayer)
+                                end
+                            end)
                         end
                     end
                     task.wait(1) 
@@ -106,6 +108,3 @@ FIceSection3:AddToggle({
 })
 
 OrionLib:Init()
-
-
--- 20.11.24
