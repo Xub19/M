@@ -1,7 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/FIce/source')))()
 local Window = OrionLib:MakeWindow({ 
-    Name = "Ijul Piece 2", 
-    HidePremium = false, 
+    Name = "Ijul Piece 2",
     SaveConfig = true, 
     ConfigFolder = "XIE",
     IntroText = "Đang trong quá trình phát triển.",
@@ -16,8 +15,7 @@ OrionLib:MakeNotification({
 })
 
 local FIce = Window:MakeTab({
-    Name = "Farm Ice",
-    PremiumOnly = false
+    Name = "Farm Ice"
 })
 
 local Players = game:GetService("Players")
