@@ -107,4 +107,157 @@ FIceSection3:AddToggle({
     end
 })
 
+local AKAPS = Window:MakeTab({
+    Name = "Combat"
+})
+
+local AKAPSS = AKAPS:AddSection({
+    Name = "Items"
+})
+
+local player = Players.LocalPlayer 
+
+local function gtdp()
+    local items = {}
+    local backpack = player:FindFirstChild("Backpack")
+    if backpack then
+        for _, item in ipairs(backpack:GetChildren()) do
+            if item.Name ~= "Hao" and item.Name ~= "Running" and item.Name ~= "Swim" then
+                table.insert(items, item.Name)
+            end
+        end
+    end
+    return items
+end
+
+local function equip(itemName)
+    local backpack = player:FindFirstChild("Backpack")
+    local character = player.Character
+    if backpack and character then
+        local item = backpack:FindFirstChild(itemName)
+        if item then
+            item.Parent = character 
+        end
+    end
+end
+
+local iventory = AKAPS:AddDropdown({
+    Name = "Danh sách vật phẩm",
+    Default = "chưa trang bị",
+    Options = gtdp(), 
+    Callback = function(Value)
+        equip(Value) 
+    end    
+})
+
+player.ChildAdded:Connect(function(child)
+    if child.Name == "Backpack" then
+        task.wait(1) 
+        iventory:Refresh(gtdp(), true) 
+    end
+end)
+
+local backpack = player:FindFirstChild("Backpack")
+if backpack then
+    backpack.ChildAdded:Connect(function()
+        iventory:Refresh(gtdp(), true) 
+    end)
+
+    backpack.ChildRemoved:Connect(function()
+        iventory:Refresh(gtdp(), true) 
+    end)
+end
+
+local AKAPSSK = AKAPS:AddSection({
+	Name = "PVP - TP"
+})
+
+local nenable = false
+local nplayer = 5  
+local chealth = {}     
+
+local function ghealth(player)
+    if player.Character and player.Character:FindFirstChild("Humanoid") then
+        return player.Character.Humanoid.Health
+    end
+    return 0
+end
+
+local function tppl(localPlayer, targetp)
+    if targetp.Character and targetp.Character:FindFirstChild("HumanoidRootPart") then
+        local humanoidRootPart = localPlayer.Character:FindFirstChild("HumanoidRootPart")
+        if humanoidRootPart then
+            humanoidRootPart.CFrame = targetp.Character.HumanoidRootPart.CFrame
+        end
+    end
+end
+
+local function attack()
+    local VirtualUser = game:GetService("VirtualUser")
+    VirtualUser:Button1Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    wait(0.1)
+    VirtualUser:Button1Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+end
+
+local function autoPvP()
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+
+    while nenable do
+        for _, targetp in ipairs(Players:GetPlayers()) do
+            if targetp ~= LocalPlayer and ghealth(targetp) > 0 then
+                chealth[targetp.UserId] = ghealth(targetp)
+                tppl(LocalPlayer, targetp)
+                local startTime = tick() 
+                while nenable and ghealth(targetp) > 0 do
+                    if tick() - startTime > nplayer and ghealth(targetp) == chealth[targetp.UserId] then
+                        break
+                    end
+                    attack()
+                    wait(0.1)
+                end
+            end
+        end
+        wait(1) 
+    end
+end
+
+AKAPSSK:AddToggle({
+    Name = "Enable Auto PvP",
+    Default = false,
+    Callback = function(Value)
+        nenable = Value
+        if nenable then
+            OrionLib:MakeNotification({
+                Name = "Auto PvP Enabled",
+                Content = "now running.",
+                Time = 5
+            })
+            coroutine.wrap(autoPvP)()
+        else
+            OrionLib:MakeNotification({
+                Name = "Auto PvP Disabled",
+                Content = "stopped.",
+                Time = 5
+            })
+        end
+    end
+})
+
+AKAPSSK:AddButton({
+    Name = "Next Player",
+    Callback = function()
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+
+        for _, targetp in ipairs(Players:GetPlayers()) do
+            if targetp ~= LocalPlayer and ghealth(targetp) > 0 then
+                tppl(LocalPlayer, targetp)
+                attack()
+                break
+            end
+        end
+    end
+})
+
 OrionLib:Init()
