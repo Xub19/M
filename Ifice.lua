@@ -192,11 +192,12 @@ local function tppl(localPlayer, targetp)
     end
 end
 
-local function attack()
-    local VirtualUser = game:GetService("VirtualUser")
-    VirtualUser:Button1Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-    wait(0.1)
-    VirtualUser:Button1Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+local function attack(targetp)
+    local LocalPlayer = game:GetService("Players").LocalPlayer
+    if targetp.Character and targetp.Character:FindFirstChild("Humanoid") then
+        local humanoid = targetp.Character.Humanoid
+        humanoid:TakeDamage(10)
+    end
 end
 
 local function autoPvP()
@@ -209,12 +210,12 @@ local function autoPvP()
                 chealth[targetp.UserId] = ghealth(targetp)
                 while nenable and ghealth(targetp) > 0 do
                     tppl(LocalPlayer, targetp)
-                    attack()
+                    attack(targetp)
                     wait(0.1)
                 end
             end
         end
-        wait(1) 
+        wait(1)
     end
 end
 
@@ -249,7 +250,7 @@ AKAPSSK:AddButton({
         for _, targetp in ipairs(Players:GetPlayers()) do
             if targetp ~= LocalPlayer and ghealth(targetp) > 0 then
                 tppl(LocalPlayer, targetp)
-                attack()
+                attack(targetp)
                 break
             end
         end
