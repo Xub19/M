@@ -192,11 +192,21 @@ local function tppl(localPlayer, targetp)
     end
 end
 
-local function attack(targetp)
-    local LocalPlayer = game:GetService("Players").LocalPlayer
-    if targetp.Character and targetp.Character:FindFirstChild("Humanoid") then
-        local humanoid = targetp.Character.Humanoid
-        humanoid:TakeDamage(10)
+local function isNear(localPlayer, targetp, range)
+    if targetp.Character and targetp.Character:FindFirstChild("HumanoidRootPart") and localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local dist = (localPlayer.Character.HumanoidRootPart.Position - targetp.Character.HumanoidRootPart.Position).Magnitude
+        return dist <= range
+    end
+    return false
+end
+
+local function attack()
+    local UserInputService = game:GetService("UserInputService")
+    if not UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
+        local screenWidth = workspace.CurrentCamera.ViewportSize.X
+        local screenHeight = workspace.CurrentCamera.ViewportSize.Y
+        mousemoveabs(screenWidth - 50, screenHeight - 50)
+        mouse1click()
     end
 end
 
@@ -208,9 +218,9 @@ local function autoPvP()
         for _, targetp in ipairs(Players:GetPlayers()) do
             if targetp ~= LocalPlayer and ghealth(targetp) > 0 then
                 chealth[targetp.UserId] = ghealth(targetp)
-                while nenable and ghealth(targetp) > 0 do
+                while nenable and ghealth(targetp) > 0 and isNear(LocalPlayer, targetp, 10) do
                     tppl(LocalPlayer, targetp)
-                    attack(targetp)
+                    attack()
                     wait(0.1)
                 end
             end
@@ -250,7 +260,7 @@ AKAPSSK:AddButton({
         for _, targetp in ipairs(Players:GetPlayers()) do
             if targetp ~= LocalPlayer and ghealth(targetp) > 0 then
                 tppl(LocalPlayer, targetp)
-                attack(targetp)
+                attack()
                 break
             end
         end
