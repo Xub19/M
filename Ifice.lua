@@ -168,8 +168,8 @@ if backpack then
     end)
 end
 
-local AKAPSSK = AKAPS:AddSection({
-	Name = "PVP - TP"
+llocal AKAPSSK = AKAPS:AddSection({
+    Name = "PVP - TP"
 })
 
 local nenable = false
@@ -207,18 +207,14 @@ local function autoPvP()
         for _, targetp in ipairs(Players:GetPlayers()) do
             if targetp ~= LocalPlayer and ghealth(targetp) > 0 then
                 chealth[targetp.UserId] = ghealth(targetp)
-                tppl(LocalPlayer, targetp)
-                local startTime = tick() 
                 while nenable and ghealth(targetp) > 0 do
-                    if tick() - startTime > nplayer and ghealth(targetp) == chealth[targetp.UserId] then
-                        break
-                    end
+                    tppl(LocalPlayer, targetp)
                     attack()
                     wait(0.1)
                 end
             end
         end
-        wait(1) 
+        wait(1)
     end
 end
 
@@ -259,5 +255,6 @@ AKAPSSK:AddButton({
         end
     end
 })
+
 
 OrionLib:Init()
