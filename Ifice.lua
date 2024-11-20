@@ -174,7 +174,8 @@ local AKAPSSK = AKAPS:AddSection({
 
 local nenable = false
 local nplayer = 5  
-local chealth = {}     
+local chealth = {}  
+local LocalPlayer = Players.LocalPlayer
 
 local function ghealth(player)
     if player.Character and player.Character:FindFirstChild("Humanoid") then
@@ -192,21 +193,21 @@ local function tppl(localPlayer, targetp)
     end
 end
 
-local function isNear(localPlayer, targetp, range)
-    if targetp.Character and targetp.Character:FindFirstChild("HumanoidRootPart") and localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        local dist = (localPlayer.Character.HumanoidRootPart.Position - targetp.Character.HumanoidRootPart.Position).Magnitude
-        return dist <= range
-    end
-    return false
-end
+local function attack(target)
+    if target.Character then
+        local rarm = LocalPlayer.Character:FindFirstChild("Right Arm")
+        local larm = LocalPlayer.Character:FindFirstChild("Left Arm")
 
-local function attack()
-    local UserInputService = game:GetService("UserInputService")
-    if not UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
-        local screenWidth = workspace.CurrentCamera.ViewportSize.X
-        local screenHeight = workspace.CurrentCamera.ViewportSize.Y
-        mousemoveabs(screenWidth - 50, screenHeight - 50)
-        mouse1click()
+        if rarm and larm then
+            local function dmg()
+                local hum = target.Character:FindFirstChild("Humanoid")
+                if hum then
+                    hum.Health = math.max(hum.Health - 10, 0)
+                end
+            end
+
+            dmg()
+        end
     end
 end
 
@@ -214,13 +215,12 @@ local function autoPvP()
     local Players = game:GetService("Players")
     local LocalPlayer = Players.LocalPlayer
 
-    while nenable do
-        for _, targetp in ipairs(Players:GetPlayers()) do
-            if targetp ~= LocalPlayer and ghealth(targetp) > 0 then
-                chealth[targetp.UserId] = ghealth(targetp)
-                while nenable and ghealth(targetp) > 0 and isNear(LocalPlayer, targetp, 10) do
-                    tppl(LocalPlayer, targetp)
-                    attack()
+    while true do
+        for _, target in ipairs(Players:GetPlayers()) do
+            if target ~= LocalPlayer and ghealth(target) > 0 then
+                while ghealth(target) > 0 do
+                    tppl(LocalPlayer, target)
+                    attack(target)
                     wait(0.1)
                 end
             end
