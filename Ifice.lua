@@ -168,7 +168,7 @@ if backpack then
     end)
 end
 
-llocal AKAPSSK = AKAPS:AddSection({
+local AKAPSSK = AKAPS:AddSection({
     Name = "PVP - TP"
 })
 
@@ -214,7 +214,7 @@ local function autoPvP()
                 end
             end
         end
-        wait(1)
+        wait(1) 
     end
 end
 
