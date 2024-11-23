@@ -1,10 +1,4 @@
--- anti afk
-local ATFK = game:service('VirtualUser')
-game:service('Players').LocalPlayer.Idled:connect(function()
-    ATFK:CaptureController()
-    ATFK:ClickButton2(Vector2.new())
-end)
-
+if tostring(game.PlaceId) == "18688206652" then
 -- lib
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({ 
@@ -28,7 +22,15 @@ local FIce = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local npcl = game:GetService("Players")
+-- anti afk
+local ATFK = game:GetService('VirtualUser')
+game:GetService('Players').LocalPlayer.Idled:Connect(function()
+    ATFK:CaptureController()
+    ATFK:ClickButton2(Vector2.new())
+end)
+
+local waitt = 33
+local Players = game:GetService("Players")
 
 -- auto rs
 local function rspl(player)
@@ -40,8 +42,9 @@ local function rspl(player)
     end
 end
 
-npcl.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function()
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(Character)
+        Character:WaitForChild("Humanoid")
         rspl(player)
     end)
 end)
@@ -73,7 +76,7 @@ FIceSection3:AddToggle({
                                 character.HumanoidRootPart.CFrame = CFrame.new(-2411.69824, 19.8741894, -598.203064, 1, 0, 0, 0, 1, 0, 0, 0, 1)
                                 humanoid:EquipTool(skill)
                                 event:FireServer()
-                                task.wait(33)
+                                task.wait(waitt)
                                 rspl(localPlayer)
                             end)
                         end
@@ -88,6 +91,25 @@ FIceSection3:AddToggle({
 local FSND = Window:MakeTab({
     Name = "AbondedSnowIsland",
 	PremiumOnly = false
+})
+
+local changet = FSnd:AddSection({
+    Name = "Time"
+})
+
+local wice = 20
+
+changet:AddSlider({
+	Name = "Change time",
+	Min = 1,
+	Max = 100,
+	Default = 20,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "giây",
+	Callback = function(Value)
+        wice = Value
+	end    
 })
 
 local adsd = FSND:AddSection({
@@ -117,7 +139,7 @@ adsd:AddToggle({
                                 character.HumanoidRootPart.CFrame = CFrame.new(2600.07031, 23.3707905, 1980.55969, 0.848060429, 0, 0.529899538, 0, 1, 0, -0.529899538, 0, 0.848060429)
                                 humanoid:EquipTool(skill)
                                 event:FireServer()
-                                task.wait(33)
+                                task.wait(wice)
                                 rspl(localPlayer)
                             end)
                         end
@@ -129,5 +151,8 @@ adsd:AddToggle({
     end
 })
 
-
 OrionLib:Init()
+
+else
+game.Players.LocalPlayer:Kick("Error : Game Not Supported")
+end
