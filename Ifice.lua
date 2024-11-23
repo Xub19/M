@@ -17,12 +17,6 @@ OrionLib:MakeNotification({
     Time = 5
 })
 
-local VirtualUser = game:service('VirtualUser')
-game:service('Players').LocalPlayer.Idled:connect(function()
-    VirtualUser:CaptureController()
-    VirtualUser:ClickButton2(Vector2.new())
-end)
-
 -- tab 1
 local FIce = Window:MakeTab({
     Name = "SnowIsland",
@@ -125,7 +119,7 @@ local FINC = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local icett = 20
+local icett = 15
 local akfice = false 
 
 local FINCSection1 = FINC:AddSection({
@@ -136,7 +130,7 @@ FINCSection1:AddSlider({
     Name = "Điều chỉnh",
     Min = 1, 
     Max = 100,
-    Default = 20,
+    Default = 15,
     Color = Color3.fromRGB(255, 255, 255),
     Increment = 1,
     ValueName = "giây",
@@ -201,7 +195,7 @@ FINCSection3:AddToggle({
 
 -- finish
 OrionLib:Init()
-
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/Xub19/xtl/refs/heads/main/antiafk.lua')))()
 else
 game.Players.LocalPlayer:Kick("Error : Game Not Supported")
 end
