@@ -102,6 +102,7 @@ FIceSection3:AddToggle({
                         if humanoid and skill and event then
                             pcall(function()
                                 character.HumanoidRootPart.CFrame = CFrame.new(-2411.69824, 19.8741894, -598.203064, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+                                task.wait(5)
                                 humanoid:EquipTool(skill)
                                 event:FireServer()
                                 task.wait(waitt)
