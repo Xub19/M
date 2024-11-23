@@ -1,4 +1,3 @@
-if game.PlaceId = 18688206652 then 
 -- anti afk
 local ATFK = game:service('VirtualUser')
 game:service('Players').LocalPlayer.Idled:connect(function()
@@ -117,7 +116,7 @@ adsd:AddToggle({
 
                         if humanoid and skill and event then
                             pcall(function()
-                                character.HumanoidRootPart.CFrame = CFrame.new(966.464294, 21.6020737, 211.560898, 0.999999762, 6.05707864e-05, -0.000426979765, -6.0340215e-05, 0.99999994, 0.000404031511, 0.0004271137, -0.000404062419, 0.999999821)
+                                character.HumanoidRootPart.CFrame = CFrame.new(2600.07031, 23.3707905, 1980.55969, 0.848060429, 0, 0.529899538, 0, 1, 0, -0.529899538, 0, 0.848060429)
                                 humanoid:EquipTool(skill)
                                 event:FireServer()
                                 task.wait(33)
@@ -132,6 +131,3 @@ adsd:AddToggle({
     end
 })
 OrionLib:Init()
-else
-game.Players.LocalPlayer:Kick("game no sp.")
-end
