@@ -93,7 +93,7 @@ local FSND = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local changet = FSND:AddSection({
+local changet = FSND:AddSection({ -- dm code
     Name = "Time"
 })
 
