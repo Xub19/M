@@ -1,31 +1,38 @@
-local VirtualUser = game:service('VirtualUser')
+if game.PlaceId = 18688206652 then 
+-- anti afk
+local ATFK = game:service('VirtualUser')
 game:service('Players').LocalPlayer.Idled:connect(function()
-    VirtualUser:CaptureController()
-    VirtualUser:ClickButton2(Vector2.new())
+    ATFK:CaptureController()
+    ATFK:ClickButton2(Vector2.new())
 end)
 
+-- lib
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({ 
     Name = "Ijul Piece 2",
+    HidePremium = false,
     SaveConfig = true, 
     ConfigFolder = "XIE",
-    IntroText = "Đang trong quá trình phát triển.",
+    IntroText = "script farm",
     IntroIcon = "rbxthumb://type=Asset&id=80001275478305&w=150&h=150"
 })
 
 OrionLib:MakeNotification({
     Name = "Ijul Piece 2",
-    Content = "BY XIE CODER",
+    Content = "BY XIE",
     Image = "rbxthumb://type=Asset&id=80001275478305&w=150&h=150",
     Time = 5
 })
 
 local FIce = Window:MakeTab({
-    Name = "Farm Ice"
+    Name = "Snow Island",
+    Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
 })
 
-local Players = game:GetService("Players")
+local npcl = game:GetService("Players")
 
+-- auto rs
 local function rspl(player)
     if player and player.Character then
         local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
@@ -35,51 +42,20 @@ local function rspl(player)
     end
 end
 
-Players.PlayerAdded:Connect(function(player)
+npcl.PlayerAdded:Connect(function(player)
     player.CharacterAdded:Connect(function()
         rspl(player)
     end)
 end)
 
-local waitt = 33
-local atrs = false
 local atkh = false 
 
-local FIceSection1 = FIce:AddSection({
-    Name = "Thời gian chờ"
-})
-
-FIceSection1:AddSlider({
-    Name = "Điều chỉnh",
-    Min = 1, 
-    Max = 100,
-    Default = 33,
-    Color = Color3.fromRGB(255, 255, 255),
-    Increment = 1,
-    ValueName = "giây",
-    Callback = function(Value)
-        waitt = Value 
-    end    
-})
-
-local FIceSection2 = FIce:AddSection({
-    Name = "Auto Reset"
-})
-
-FIceSection2:AddToggle({
-    Name = "Kích hoạt",
-    Default = false,
-    Callback = function(Value)
-        atrs = Value
-    end 
-})
-
 local FIceSection3 = FIce:AddSection({
-    Name = "Sukuna V1 - C"
+    Name = "pl equip sukuna v1"
 })
 
 FIceSection3:AddToggle({
-    Name = "Kích hoạt",
+    Name = "activate",
     Default = false,
     Callback = function(state)
         atkh = state 
@@ -99,10 +75,8 @@ FIceSection3:AddToggle({
                                 character.HumanoidRootPart.CFrame = CFrame.new(-2411.69824, 19.8741894, -598.203064, 1, 0, 0, 0, 1, 0, 0, 0, 1)
                                 humanoid:EquipTool(skill)
                                 event:FireServer()
-                                task.wait(waitt)
-                                if atrs then
-                                    rspl(localPlayer)
-                                end
+                                task.wait(33)
+                                rspl(localPlayer)
                             end)
                         end
                     end
@@ -113,4 +87,51 @@ FIceSection3:AddToggle({
     end
 })
 
+local FSND = Window:MakeTab({
+    Name = "Abonded Snow Island",
+    Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local adsd = FSND:AddSection({
+    Name = "pl equip ice v2"
+})
+
+local aicv2 = false
+
+adsd:AddToggle({
+    Name = "activate",
+    Default = false,
+    Callback = function(value)
+        aicv2 = value
+        if aicv2 then 
+            spawn(function()
+                while atkh do
+                    local localPlayer = Players.LocalPlayer
+                    if localPlayer and localPlayer.Character then
+                        local character = localPlayer.Character
+                        local humanoid = character:FindFirstChildOfClass("Humanoid")
+                        local skill = localPlayer.Backpack:FindFirstChild("IceAwakening")
+                        local event = game:GetService("ReplicatedStorage"):FindFirstChild("Events")
+                            and game:GetService("ReplicatedStorage").Events:FindFirstChild("IceAge")
+
+                        if humanoid and skill and event then
+                            pcall(function()
+                                character.HumanoidRootPart.CFrame = CFrame.new(966.464294, 21.6020737, 211.560898, 0.999999762, 6.05707864e-05, -0.000426979765, -6.0340215e-05, 0.99999994, 0.000404031511, 0.0004271137, -0.000404062419, 0.999999821)
+                                humanoid:EquipTool(skill)
+                                event:FireServer()
+                                task.wait(33)
+                                rspl(localPlayer)
+                            end)
+                        end
+                    end
+                    task.wait(1) 
+                end
+            end) 
+        end
+    end
+})
 OrionLib:Init()
+else
+game.Players.LocalPlayer:Kick("game no sp.")
+end
