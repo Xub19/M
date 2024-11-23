@@ -1,4 +1,3 @@
-if game.PlaceId = 18688206652 then
 -- anti afk
 local ATFK = game:service('VirtualUser')
 game:service('Players').LocalPlayer.Idled:connect(function()
@@ -130,6 +129,3 @@ adsd:AddToggle({
     end
 })
 OrionLib:Init()
-else
-game.Players.LocalPlayer:Kick("Error : Game Not Supported")
-end
