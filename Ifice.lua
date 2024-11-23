@@ -102,7 +102,7 @@ FIceSection3:AddToggle({
                         if humanoid and skill and event then
                             pcall(function()
                                 character.HumanoidRootPart.CFrame = CFrame.new(-2411.69824, 19.8741894, -598.203064, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-                                task.wait(5)
+                                -- task.wait(5)
                                 humanoid:EquipTool(skill)
                                 event:FireServer()
                                 task.wait(waitt)
@@ -180,6 +180,7 @@ FINCSection3:AddToggle({
                         if humanoid and skill and event then
                             pcall(function()
                                 character.HumanoidRootPart.CFrame = CFrame.new(2600.07031, 23.3707905, 1980.55969, 0.848060429, 0, 0.529899538, 0, 1, 0, -0.529899538, 0, 0.848060429)
+                                task.wait(5)
                                 humanoid:EquipTool(skill)
                                 event:FireServer()
                                 task.wait(icett)
