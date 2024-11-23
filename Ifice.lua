@@ -105,7 +105,7 @@ adsd:AddToggle({
         aicv2 = value
         if aicv2 then 
             spawn(function()
-                while atkh do
+                while aicv2 do
                     local localPlayer = Players.LocalPlayer
                     if localPlayer and localPlayer.Character then
                         local character = localPlayer.Character
