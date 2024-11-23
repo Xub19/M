@@ -1,3 +1,4 @@
+if game.PlaceId = 18688206652 then
 -- anti afk
 local ATFK = game:service('VirtualUser')
 game:service('Players').LocalPlayer.Idled:connect(function()
@@ -8,7 +9,7 @@ end)
 -- lib
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({ 
-    Name = "Ijul Piece 2",
+    Name = "Ijul Piece 2 | Hao Modder",
     HidePremium = false,
     SaveConfig = true, 
     ConfigFolder = "XIE",
@@ -18,14 +19,13 @@ local Window = OrionLib:MakeWindow({
 
 OrionLib:MakeNotification({
     Name = "Ijul Piece 2",
-    Content = "BY XIE",
+    Content = "BY XIE and Modder Hao",
     Image = "rbxthumb://type=Asset&id=80001275478305&w=150&h=150",
     Time = 5
 })
 
 local FIce = Window:MakeTab({
-    Name = "Snow Island",
-    Icon = "rbxassetid://4483345998",
+    Name = "SnowIsland",
 	PremiumOnly = false
 })
 
@@ -50,11 +50,11 @@ end)
 local atkh = false 
 
 local FIceSection3 = FIce:AddSection({
-    Name = "pl equip sukuna v1"
+    Name = "Require: Sukuna v1"
 })
 
 FIceSection3:AddToggle({
-    Name = "activate",
+    Name = "Activate",
     Default = false,
     Callback = function(state)
         atkh = state 
@@ -87,19 +87,18 @@ FIceSection3:AddToggle({
 })
 
 local FSND = Window:MakeTab({
-    Name = "Abonded Snow Island",
-    Icon = "rbxassetid://4483345998",
+    Name = "AbondedSnowIsland",
 	PremiumOnly = false
 })
 
 local adsd = FSND:AddSection({
-    Name = "pl equip ice v2"
+    Name = "Require: Ice Awakening"
 })
 
 local aicv2 = false
 
 adsd:AddToggle({
-    Name = "activate",
+    Name = "Activate",
     Default = false,
     Callback = function(value)
         aicv2 = value
@@ -130,5 +129,7 @@ adsd:AddToggle({
         end
     end
 })
-
 OrionLib:Init()
+else
+game.Players.LocalPlayer:Kick("Error : Game Not Supported")
+end
