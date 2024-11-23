@@ -1,5 +1,5 @@
 if tostring(game.PlaceId) == "18688206652" then
--- lib
+
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({ 
     Name = "Ijul Piece 2 | Hao Modder",
@@ -17,22 +17,20 @@ OrionLib:MakeNotification({
     Time = 5
 })
 
+local VirtualUser = game:service('VirtualUser')
+game:service('Players').LocalPlayer.Idled:connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+end)
+
+-- tab 1
 local FIce = Window:MakeTab({
     Name = "SnowIsland",
 	PremiumOnly = false
 })
 
--- anti afk
-local ATFK = game:GetService('VirtualUser')
-game:GetService('Players').LocalPlayer.Idled:Connect(function()
-    ATFK:CaptureController()
-    ATFK:ClickButton2(Vector2.new())
-end)
-
-local waitt = 33
 local Players = game:GetService("Players")
 
--- auto rs
 local function rspl(player)
     if player and player.Character then
         local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
@@ -43,20 +41,50 @@ local function rspl(player)
 end
 
 Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function(Character)
-        Character:WaitForChild("Humanoid")
+    player.CharacterAdded:Connect(function()
         rspl(player)
     end)
 end)
 
+local waitt = 33
+local atrs = false
 local atkh = false 
+
+local FIceSection1 = FIce:AddSection({
+    Name = "Thời gian chờ"
+})
+
+FIceSection1:AddSlider({
+    Name = "Điều chỉnh",
+    Min = 1, 
+    Max = 100,
+    Default = 33,
+    Color = Color3.fromRGB(255, 255, 255),
+    Increment = 1,
+    ValueName = "giây",
+    Callback = function(Value)
+        waitt = Value 
+    end    
+})
+
+local FIceSection2 = FIce:AddSection({
+    Name = "Auto Reset"
+})
+
+FIceSection2:AddToggle({
+    Name = "Kích hoạt",
+    Default = false,
+    Callback = function(Value)
+        atrs = Value
+    end 
+})
 
 local FIceSection3 = FIce:AddSection({
     Name = "Require: Sukuna v1"
 })
 
 FIceSection3:AddToggle({
-    Name = "Activate",
+    Name = "Kích hoạt",
     Default = false,
     Callback = function(state)
         atkh = state 
@@ -77,7 +105,9 @@ FIceSection3:AddToggle({
                                 humanoid:EquipTool(skill)
                                 event:FireServer()
                                 task.wait(waitt)
-                                rspl(localPlayer)
+                                if atrs then
+                                    rspl(localPlayer)
+                                end
                             end)
                         end
                     end
@@ -88,44 +118,56 @@ FIceSection3:AddToggle({
     end
 })
 
-local FSND = Window:MakeTab({
+-- tab 2
+local FINC = Window:MakeTab({
     Name = "AbondedSnowIsland",
 	PremiumOnly = false
 })
 
-local changet = FSND:AddSection({ -- dm code
-    Name = "Time"
+local icett = 20
+local akfice = false 
+
+local FINCSection1 = FINC:AddSection({
+    Name = "Thời gian chờ"
 })
 
-local wice = 20
-
-changet:AddSlider({
-	Name = "Change time",
-	Min = 1,
-	Max = 100,
-	Default = 20,
-	Color = Color3.fromRGB(255,255,255),
-	Increment = 1,
-	ValueName = "giây",
-	Callback = function(Value)
-        wice = Value
-	end    
+FINCSection1:AddSlider({
+    Name = "Điều chỉnh",
+    Min = 1, 
+    Max = 100,
+    Default = 20,
+    Color = Color3.fromRGB(255, 255, 255),
+    Increment = 1,
+    ValueName = "giây",
+    Callback = function(Value)
+        icett = Value 
+    end    
 })
 
-local adsd = FSND:AddSection({
+local FINCSection2 = FINC:AddSection({
+    Name = "Auto Reset"
+})
+
+FINCSection2:AddToggle({
+    Name = "Kích hoạt",
+    Default = false,
+    Callback = function(Value)
+        atrs = Value
+    end 
+})
+
+local FINCSection3 = FINC:AddSection({
     Name = "Require: Ice Awakening"
 })
 
-local aicv2 = false
-
-adsd:AddToggle({
-    Name = "Activate",
+FINCSection3:AddToggle({
+    Name = "Kích hoạt",
     Default = false,
-    Callback = function(value)
-        aicv2 = value
-        if aicv2 then 
+    Callback = function(state)
+        akfice = state 
+        if akfice then
             spawn(function()
-                while aicv2 do
+                while akfice do
                     local localPlayer = Players.LocalPlayer
                     if localPlayer and localPlayer.Character then
                         local character = localPlayer.Character
@@ -139,18 +181,23 @@ adsd:AddToggle({
                                 character.HumanoidRootPart.CFrame = CFrame.new(2600.07031, 23.3707905, 1980.55969, 0.848060429, 0, 0.529899538, 0, 1, 0, -0.529899538, 0, 0.848060429)
                                 humanoid:EquipTool(skill)
                                 event:FireServer()
-                                task.wait(wice)
-                                rspl(localPlayer)
+                                task.wait(icett)
+                                if atrs then
+                                    rspl(localPlayer)
+                                end
                             end)
                         end
                     end
                     task.wait(1) 
                 end
-            end) 
+            end)
         end
     end
 })
 
+
+
+-- finish
 OrionLib:Init()
 
 else
