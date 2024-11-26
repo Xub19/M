@@ -11,7 +11,7 @@ local t=Instance.new("TextLabel",h)
 t.Size=UDim2.new(0.85,0,1,0)
 t.Position=UDim2.new(0.05,0,0,0)
 t.Font=Enum.Font.SourceSansBold
-t.Text="Anti AFK Script"
+t.Text="Anti AFK | By Xub19"
 t.TextSize=16
 t.TextColor3=Color3.fromRGB(255,0,0)
 t.BackgroundTransparency=1
@@ -36,14 +36,6 @@ s.Text="Status: Active"
 s.TextSize=14
 s.TextColor3=Color3.fromRGB(255,0,0)
 s.BackgroundTransparency=1
-local r=Instance.new("TextLabel",f)
-r.Size=UDim2.new(1,0,0.3,0)
-r.Position=UDim2.new(0,0,0.8,0)
-r.Font=Enum.Font.SourceSans
-r.Text="by Xub19"
-r.TextSize=12
-r.TextColor3=Color3.fromRGB(255,0,0)
-r.BackgroundTransparency=1
 local v=game:GetService("VirtualUser")
 game:GetService("Players").LocalPlayer.Idled:Connect(function()
 v:CaptureController()
