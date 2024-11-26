@@ -1,49 +1,45 @@
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local CloseButton = Instance.new("TextButton")
-local UIS = game:GetService("UserInputService")
-local VirtualUser = game:service('VirtualUser')
+local Players = game:GetService("Players")
+local VirtualUser = game:GetService("VirtualUser")
+local player = Players.LocalPlayer
 
-ScreenGui.Parent = game.CoreGui
-Frame.Parent = ScreenGui
-Frame.Size = UDim2.new(0, 200, 0, 100)
-Frame.Position = UDim2.new(0.5, -100, 0.5, -50)
+player.Idled:Connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+end)
+
+local ScreenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+local Frame = Instance.new("Frame", ScreenGui)
+local CloseButton = Instance.new("TextButton", Frame)
+local Label = Instance.new("TextLabel", Frame)
+
+ScreenGui.ResetOnSpawn = false
+ScreenGui.IgnoreGuiInset = true
+
+Frame.AnchorPoint = Vector2.new(1, 1)
+Frame.Position = UDim2.new(1, -10, 1, -10)
+Frame.Size = UDim2.new(0, 200, 0, 50)
 Frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+Frame.BorderSizePixel = 0
+Frame.Draggable = true
+Frame.Active = true
 
-CloseButton.Parent = Frame
-CloseButton.Size = UDim2.new(0, 50, 0, 30)
-CloseButton.Position = UDim2.new(1, -55, 0, 5)
+Label.Text = "Đã bật Anti AFK"
+Label.Size = UDim2.new(1, -40, 1, 0)
+Label.Position = UDim2.new(0, 10, 0, 0)
+Label.TextColor3 = Color3.new(1, 1, 1)
+Label.BackgroundTransparency = 1
+Label.TextScaled = true
+Label.Font = Enum.Font.SourceSans
+
 CloseButton.Text = "x"
-CloseButton.BackgroundColor3 = Color3.new(1, 0, 0)
+CloseButton.Size = UDim2.new(0, 30, 1, 0)
+CloseButton.Position = UDim2.new(1, -30, 0, 0)
+CloseButton.TextColor3 = Color3.new(1, 1, 1)
+CloseButton.BackgroundColor3 = Color3.new(0.8, 0, 0)
+CloseButton.BorderSizePixel = 0
+CloseButton.Font = Enum.Font.SourceSans
+CloseButton.TextScaled = true
 
 CloseButton.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
-end)
-
-local dragging, dragStart, startPos
-
-Frame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = true
-        dragStart = input.Position
-        startPos = Frame.Position
-    end
-end)
-
-Frame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
-        local delta = input.Position - dragStart
-        Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
-end)
-
-UIS.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = false
-    end
-end)
-
-game:service('Players').LocalPlayer.Idled:Connect(function()
-    VirtualUser:CaptureController()
-    VirtualUser:ClickButton2(Vector2.new())
 end)
