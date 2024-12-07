@@ -174,7 +174,7 @@ mini2.Visible = false
 createRainbowOutline(mini2)
 createRainbowText(mini2)
 
-speeds = 1
+speeds = 10
 
 local speaker = game:GetService("Players").LocalPlayer
 
